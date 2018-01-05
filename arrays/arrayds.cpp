@@ -4,6 +4,7 @@ using namespace std;
 
 /*
 print contents of array in reverse order
+note: if using stack, you technically don't even have to read it into the array
 */
 
 int main() {
@@ -16,10 +17,13 @@ int main() {
 		cin >> arr[i];
 	}
 
-	// to reverse: 
+	// to reverse using while loop: 
+	/* 
 	while (n-- > 0) {
 		cout << arr[n] << " ";
-	}
+	} */
+
+
 
 	return 0;
 }
