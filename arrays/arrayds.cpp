@@ -3,27 +3,27 @@
 using namespace std;
 
 /*
-print contents of array in reverse order
-note: if using stack, you technically don't even have to read it into the array
+Function to print all integers in array in reverse order
+note: array is implemented as a vector in this problem
+@param arr, array to reverse
+@return void
 */
+void reversePrint(vector<int>& array) {
+	int size = array.size();
+	while(size-- > 0) {
+		cout << array[size] << " ";
+	}
+	cout << "\n";
+}
 
 int main() {
 	int n;
-	cout << "Enter number of items to insert into array: ";
 	cin >> n;
-	vector<int> arr(n);
-	cout << "Enter values to insert into array: " << endl;
+	vector<int> array(n);
 	for (int i = 0; i < n; i++) {
-		cin >> arr[i];
+		cin >> array[i];
 	}
-
-	// to reverse using while loop: 
-	/* 
-	while (n-- > 0) {
-		cout << arr[n] << " ";
-	} */
-
-
+	reversePrint(array);
 
 	return 0;
 }
