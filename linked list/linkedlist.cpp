@@ -9,9 +9,12 @@ class Node {
 public:
 	int data;
 	Node* next;	
+	Node* prev;
 
-	Node(int d): data(d), next(nullptr) {} // constructor
+	Node(int d): data(d), next(nullptr), prev(nullptr) {} // constructor
 };
+
+
 
 /*
 Function to insert a node at the tail of a linked list.
@@ -100,7 +103,46 @@ Node* insertNth(Node* head, int data, int pos) {
 			prev->next = newNode; // insert in middle
 		}
 	}
+	return head;
+}
 
+/*
+Function to insert a node into a sorted doubly linked list
+@param head, pointer to head node of list
+@param data, data of node to insert into list
+@return head, head pointer to updated list
+*/
+Node* sortedInsert(Node* head, int data) {
+	if (!head) {// empty list 
+		Node* temp = new Node(data);
+		return temp; // return the single node
+	}
+
+	// node exists, need to find location to insert
+	Node* tempHead = head;
+	while (tempHead) {
+		if (tempHead->data >= data) {
+			Node *n = new Node(data);
+			n->prev = tempHead->prev;
+			n->next = tempHead;
+			tempHead->prev = n;
+			if (!(n->prev)) {
+				return n; // n is at the beginning of list
+			} else {
+				(n->prev)->next = n;
+				return head;
+			} 
+		}
+		if (!tempHead->next) {
+			Node* n = new Node;
+			n->data = data;
+			n->prev = tempHead;
+			n->next = nullptr;
+			tempHead->next = n;
+			break;
+		}
+		tempHead = tempHead->next;
+	}
 	return head;
 }
 
@@ -334,7 +376,48 @@ Node* reverseWithPointer(Node* head) {
 	head->next = NULL;
 
 	return temp;
+}
 
+/*
+Reversing a doubly linked list using recursion
+@param head, pointer to head node of list
+@return head, pointer to head node of reversed list
+// LMAO THIS ACTUALLY WORKS ON THE FIRST TRY
+*/
+Node* reverseDouble(Node* head) {
+	if (!head || !head->next)
+		return head; // return original head pointer if list is empty or has 1 node
+
+	Node* temp = reverseDouble(head->next);
+	head->next->next = head;
+	head->next = nullptr;
+	head->prev = head;
+
+	return temp;
+}
+
+/*
+Reversing a doubly linked list iteratively
+@param head, pointer to head node of list
+@return head, pointer to head node of reversed list
+
+*/
+Node* reverseDoubleIterative(Node* head) {
+	Node* temp = nullptr;
+	Node* current = head;
+
+	while(current) {
+		temp = current->prev;
+		current->prev = current->next;
+		current->next = temp;
+		current = current->prev;
+	}
+
+	if (temp) {
+		head = temp->prev;
+	}
+
+	return head;
 }
 
 /*
